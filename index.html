@@ -1,182 +1,930 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>My Potfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yegnesh Kamble - Web Developer & Video Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .typing-animation {
+            border-right: 2px solid #667eea;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: #667eea; }
+            51%, 100% { border-color: transparent; }
+        }
+        
+        .skill-bar {
+            width: 0%;
+            transition: width 2s ease-in-out;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.6); }
+        }
+
+        /* New Home Page Styles */
+        .geometric-bg {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: particleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            animation: slideInLeft 1s ease forwards;
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            animation: slideInRight 1s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .bounce-in {
+            opacity: 0;
+            transform: scale(0.3);
+            animation: bounceIn 0.8s ease forwards;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
 </head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full bg-white/70 backdrop-blur-lg z-50 shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Yegnesh Kamble
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">About</a>
+                    <a href="#skills" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Skills</a>
+                    <a href="#projects" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Projects</a>
+                    <a href="#contact" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Contact</a>
+                </div>
+                <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 pb-4">
+                <div class="flex flex-col space-y-4 bg-white/90 backdrop-blur-lg rounded-lg p-4 shadow-lg">
+                    <a href="#home" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">About</a>
+                    <a href="#skills" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Skills</a>
+                    <a href="#projects" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Projects</a>
+                    <a href="#contact" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-<body>
-   <section id="header">
-    <div class="header container">
-      <div class="nav-bar">
-        <div class="brand">
-          <a href="#hero">
-            <h1><span></span>PORTFOLIO</h1>
-          </a>
-        </div>
-        <div class="nav-list">
-          <div class="hamburger">
-            <div class="bar"></div>
-          </div>
-          <ul>
-            <li><a href="#hero" data-after="Home">Home</a></li>
-            <li><a href="#services" data-after="Service">My Skill</a></li>
-            <li><a href="#projects" data-after="Projects">Projects</a></li>
-            <li><a href="#about" data-after="About">About</a></li>
-            <li><a href="#contact" data-after="Contact">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <section id="hero">
-    <div class="hero container">
-      <div>
-        <h1>Hello, <span></span></h1>
-        <h1>My Name is <span></span></h1>
-        <h1>Yegnesh <span></span></h1>
-        <!--<a href="#projects" type="button" class="cta">Portfolio</a>-->
-      </div>
-    </div>
-  </section>
-  
-  <section id="services">
-    <div class="services container">
-      <div class="service-top">
-        <h1 class="section-title">M<span>y</span> Sk<span>i</span>ll</h1>
-        <!--<p>You possess a versatile skill set that includes expertise in C and C++ programming languages, as well as proficiency in web development technologies like HTML, CSS, and JavaScript. Additionally, your proficiency in video editing showcases your creative and multimedia capabilities. These skills can be valuable in software development, web design, and content creation, enabling you to tackle a wide range of projects and contribute to various industries with your technical and creative abilities.</p>-->
-      </div>
-      <div class="service-bottom">
-        <div class="service-item1">
-          <div class="icon"><img src="https://webimages.mongodb.com/_com_assets/cms/l3etz1z9tduxvdoni-c.svg?auto=format%252Ccompress" /></div>
-          <h2>C Language</h2>
-          <p> I have skills in the C programming language! C is a powerful and widely-used language known for its efficiency and versatility.</p>
-        </div>
-        <div class="service-item2">
-          <div class="icon1"><img src="https://raw.githubusercontent.com/isocpp/logos/master/cpp_logo.png" /></div>
-          <h2>C++ Language</h2>
-          <p>I have skills in the C++ programming language! C++ is a powerful and widely-used language known for its efficiency and versatility.</p>
-        </div>
-        <div class="service-item3">
-          <div class="icon2"><img src="https://w7.pngwing.com/pngs/532/860/png-transparent-computer-icons-internet-hyperlink-web-browser-world-wide-web-text-trademark-logo-thumbnail.png" /></div>
-          <h2>Web Design</h2>
-          <p>I specialize in front-end development, where I create  user-friendly web interfaces. My skills include HTML, CSS, and JavaScript  </p>
-        </div>
-        <div class="service-item4">
-          <div class="icon2"><img src="https://w7.pngwing.com/pngs/55/65/png-transparent-video-editing-editing-film-editing-edit-desktop-wallpaper-film-edit-icon-thumbnail.png" /></div>
-          <h2>video editing</h2>
-          <p>I specialize in video editing, a creative process that involves assembling and manipulating video footage to tell a compelling story.</p>
-        </div>
-        <div class="service-item4">
-          <div class="icon2"><img src="https://e7.pngegg.com/pngimages/107/459/png-clipart-graphic-designing-text-logo-graphic-designer-graphic-combination-company-text.png" /></div>
-          <h2>Graphic Design</h2>
-          <p>Canva is a popular online graphic design platform that empowers users to create stunning visuals and designs with ease.</p>
-        </div>
-        <div class="service-item4">
-          <div class="icon2"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" /></div>
-          <h2>Python</h2>
-          <p> I have skills in the Python programming language! C is a powerful and widely-used language known for its efficiency and versatility.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="projects">
-    <div class="projects container">
-      <div class="projects-header">
-        <h1 class="section-title">Recent <span>Projects</span></h1>
-      </div>
-      <div class="all-projects">
-        <div class="project-item">
-          <div class="project-info">
-            <h1>Project 1</h1>
-            <h2>Personal Website</h2>
-            <p>"Welcome to my personal website! I'm Yegnesh, and this is where I share my passions, experiences, and insights. Explore my portfolio, read my blog, and get to know me better. Feel free to connect with me, and let's embark on a journey of discovery and inspiration together."</p>
-          </div>
-          <div class="project-img">
-            <img src="./img/1.png" alt="img">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- New Hero Section -->
+    <section id="home" class="min-h-screen geometric-bg relative overflow-hidden flex items-center">
+        <!-- Animated Particles -->
+        <div class="particle w-4 h-4 top-20 left-10" style="animation-delay: 0s;"></div>
+        <div class="particle w-6 h-6 top-40 right-20" style="animation-delay: 1s;"></div>
+        <div class="particle w-3 h-3 top-60 left-1/4" style="animation-delay: 2s;"></div>
+        <div class="particle w-5 h-5 bottom-40 right-1/3" style="animation-delay: 3s;"></div>
+        <div class="particle w-2 h-2 bottom-20 left-1/2" style="animation-delay: 4s;"></div>
 
-  <section id="about">
-    <div class="about container">
-      <div class="col-left">
-        <div class="about-img">
-          <img src="./img/16.jpg" alt="img">
-        </div>
-      </div>
-      <div class="col-right">
-        <h1 class="section-title">About <span>me</span></h1>
-        <h2>Front End Developer</h2>
-        <p>Hello, I'm Yegnesh Kamble, a skilled front-end developer with a passion for creating engaging and user-friendly web interfaces. I specialize in turning design concepts into responsive and interactive websites, using a combination of HTML, CSS, and JavaScript. I thrive on staying up-to-date with the latest web development trends and technologies to deliver exceptional user experiences. Whether it's crafting pixel-perfect layouts or optimizing performance, I'm dedicated to bringing web projects to life with creativity and precision.</p>
-        <a href="img/Resume.pdf" class="cta">Download Resume</a>
-      </div>
-    </div>
-  </section>
-  
-  <section id="contact">
-    <div class="contact container">
-      <div>
-        <h1 class="section-title">Contact <span>info</span></h1>
-      </div>
-      <div class="contact-items">
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/phone.png" /></div>
-          <div class="contact-info">
-            <h1>Phone</h1>
-            <h2></h2>
-            <h2>7219274312</h2>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/new-post.png" /></div>
-          <div class="contact-info">
-            <h1>Email</h1>
-            <h2>yegnesh7219@gmail.com</h2>
-            <h2>yegneshkamble9588@gmail.com</h2>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/map-marker.png" /></div>
-          <div class="contact-info">
-            <h1>Address</h1>
-            <h2>Tekadi, TAH-Parshivani, DIST-Nagpur.441404</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <section id="footer">
-    <div class="footer container">
-      <div class="brand">
-        <h1><span>Y</span>egnesh <span>K</span>amble</h1>
-      </div>
-      <h2>Front End Developer</h2>
-      <div class="social-icon">
-        <div class="social-item">
-          <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/facebook-new.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://www.instagram.com/yegnesh.kamble"><img src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://twitter.com/yeg45211"><img src="https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-twitter-social-media-round-icon-png-image_6315985.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/behance.png" /></a>
-        </div>
-      </div>
-      <p>Copyright © 2025 Yegnesh. All rights reserved</p>
-    </div>
-  </section>
-  
-  <script src="script.js"></script>
-</body>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <!-- Left Content -->
+            <div class="text-white space-y-6 sm:space-y-8 text-center lg:text-left">
+                <div class="slide-in-left" style="animation-delay: 0.2s;">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-glow leading-tight">
+                        Hi, I'm
+                        <span class="block bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">
+                            Yegnesh
+                        </span>
+                    </h1>
+                </div>
+                
+                <div class="slide-in-left" style="animation-delay: 0.4s;">
+                    <div class="text-xl sm:text-2xl lg:text-3xl font-medium mb-4">
+                        <span id="dynamic-text" class="typing-animation">Web Developer</span>
+                    </div>
+                    <p class="text-lg sm:text-xl text-white/90 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                        Crafting digital experiences through innovative web development and compelling video storytelling
+                    </p>
+                </div>
 
+                <div class="slide-in-left flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start" style="animation-delay: 0.6s;">
+                    <button onclick="scrollToSection('projects')" class="glass-effect px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-white hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+                        View My Work
+                    </button>
+                    <button onclick="scrollToSection('contact')" class="bg-white text-purple-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+                        Let's Talk
+                    </button>
+                </div>
+
+                <!-- Social Links -->
+                <div class="slide-in-left flex space-x-4 sm:space-x-6 justify-center lg:justify-start" style="animation-delay: 0.8s;">
+                    <a href="https://www.linkedin.com/in/yegnesh-kamble-3a8669211" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 glass-effect rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 transform hover:scale-110">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/yegnesh.kamble" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 glass-effect rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 transform hover:scale-110">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com/yegnesh.kamble" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 glass-effect rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 transform hover:scale-110">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="https://alvo.chat/5W5a?fbclid=PAdGRjcAMvT8hleHRuA2FlbQIxMQABpzbPk9UGIhE2Nq1N8aIQIJya5YHJOX7pgMl1gVnCon6QNRkuJDD3QLVsSeO__aem_wYtSZhanLIZQYHyoQVxaUw" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 glass-effect rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 transform hover:scale-110">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Content - Interactive Elements -->
+            <div class="relative mt-8 lg:mt-0 order-first lg:order-last">
+                <div class="slide-in-right" style="animation-delay: 0.3s;">
+                    <!-- Main Profile Card -->
+                    <div class="glass-effect rounded-3xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 max-w-sm mx-auto">
+                        <div class="text-center text-white">
+                            <div class="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 sm:mb-6 rounded-full overflow-hidden border-4 border-white/30 bounce-in" style="animation-delay: 1s;">
+                                <img src="img/yegnesh.jpeg" alt="Yegnesh Kamble" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gradient-to-br from-yellow-400 to-pink-500 rounded-full flex items-center justify-center text-2xl sm:text-4xl font-bold text-white\'>YK</div>';">
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold mb-2">Yegnesh Kamble</h3>
+                            <p class="text-white/80 mb-4 sm:mb-6 text-sm sm:text-base">Web Developer & Video Editor</p>
+                            
+                            <!-- Stats -->
+                            <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
+                                <div class="text-center bounce-in" style="animation-delay: 1.2s;">
+                                    <div class="text-xl sm:text-2xl font-bold text-yellow-300">5+</div>
+                                    <div class="text-xs sm:text-sm text-white/70">Projects</div>
+                                </div>
+                                <div class="text-center bounce-in" style="animation-delay: 1.4s;">
+                                    <div class="text-xl sm:text-2xl font-bold text-pink-300">1+</div>
+                                    <div class="text-xs sm:text-sm text-white/70">Years</div>
+                                </div>
+                                <!-- <div class="text-center bounce-in" style="animation-delay: 1.6s;">
+                                    <div class="text-xl sm:text-2xl font-bold text-blue-300">100%</div>
+                                    <div class="text-xs sm:text-sm text-white/70">Quality</div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Skill Cards - Hidden on mobile, visible on larger screens -->
+                <div class="hidden lg:block absolute -top-8 -left-8 slide-in-left" style="animation-delay: 1s;">
+                    <div class="glass-effect rounded-2xl p-3 sm:p-4 text-white text-center transform hover:scale-110 transition-all duration-300">
+                        <div class="text-xl sm:text-2xl mb-1 sm:mb-2">💻</div>
+                        <div class="text-xs sm:text-sm font-semibold">Web Dev</div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block absolute -top-4 -right-12 slide-in-right" style="animation-delay: 1.2s;">
+                    <div class="glass-effect rounded-2xl p-3 sm:p-4 text-white text-center transform hover:scale-110 transition-all duration-300">
+                        <div class="text-xl sm:text-2xl mb-1 sm:mb-2">🎬</div>
+                        <div class="text-xs sm:text-sm font-semibold">Video Edit</div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block absolute -bottom-8 left-4 slide-in-left" style="animation-delay: 1.4s;">
+                    <div class="glass-effect rounded-2xl p-3 sm:p-4 text-white text-center transform hover:scale-110 transition-all duration-300">
+                        <div class="text-xl sm:text-2xl mb-1 sm:mb-2">🎨</div>
+                        <div class="text-xs sm:text-sm font-semibold">Design</div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block absolute bottom-4 -right-8 slide-in-right" style="animation-delay: 1.6s;">
+                    <div class="glass-effect rounded-2xl p-3 sm:p-4 text-white text-center transform hover:scale-110 transition-all duration-300">
+                        <div class="text-xl sm:text-2xl mb-1 sm:mb-2">⚡</div>
+                        <div class="text-xs sm:text-sm font-semibold">Fast</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">About Me</h2>
+                <div class="w-20 h-1 bg-purple-600 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6">Passionate Creator</h3>
+                    <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
+                        I'm a versatile digital creator who bridges the gap between technical excellence and creative vision. 
+                        With expertise in both web development and video editing, I bring unique perspectives to every project.
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed text-sm sm:text-base">
+                        My journey began with a fascination for how technology can tell compelling stories. Whether I'm 
+                        crafting responsive websites or editing cinematic videos, I'm driven by the desire to create 
+                        experiences that engage and inspire.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 text-center sm:text-left">
+                        <div class="text-center">
+                            <div class="text-2xl sm:text-3xl font-bold text-purple-600">5+</div>
+                            <div class="text-gray-600 text-sm sm:text-base">Projects</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl sm:text-3xl font-bold text-purple-600">1+</div>
+                            <div class="text-gray-600 text-sm sm:text-base">Years Experience</div>
+                        </div>
+                        <!-- <div class="text-center">
+                            <div class="text-2xl sm:text-3xl font-bold text-purple-600">100%</div>
+                            <div class="text-gray-600 text-sm sm:text-base">Client Satisfaction</div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="relative order-1 md:order-2 mb-8 md:mb-0">
+                    <div class="w-64 h-64 sm:w-80 sm:h-80 mx-auto bg-gradient-to-br from-purple-400 to-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-32 h-32 sm:w-40 sm:h-40 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 sm:py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Skills & Expertise</h2>
+                <div class="w-20 h-1 bg-purple-600 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 sm:gap-12">
+                <!-- Web Development Skills -->
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-8 h-8 text-purple-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        Web Development
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">HTML/CSS</span>
+                                <span class="text-gray-600">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">JavaScript</span>
+                                <span class="text-gray-600">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">React</span>
+                                <span class="text-gray-600">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Node.js</span>
+                                <span class="text-gray-600">50%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Python</span>
+                                <span class="text-gray-600">88%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">C/C++</span>
+                                <span class="text-gray-600">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="85"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Editing Skills -->
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-8 h-8 text-purple-600 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/>
+                        </svg>
+                        Video Editing
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Adobe Premiere Pro</span>
+                                <span class="text-gray-600">92%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="92"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">After Effects</span>
+                                <span class="text-gray-600">88%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="88"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">VN</span>
+                                <span class="text-gray-600">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Motion Graphics</span>
+                                <span class="text-gray-600">83%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="83"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Graphic Design</span>
+                                <span class="text-gray-600">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-purple-600 h-2 rounded-full" data-width="90"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Projects</h2>
+                <div class="w-20 h-1 bg-purple-600 mx-auto"></div>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Project 1 - FeastHive Restaurant -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.20-1.10-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">FeastHive Restaurant</h3>
+                        <p class="text-gray-600 mb-4">Modern restaurant website with online ordering and reservation system</p>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">HTML/CSS</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">JavaScript</span>
+                        </div>
+                        <a href=" https://yegneshkamble72.github.io/FeastHiveRestaurant/" target="_blank" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors inline-block">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2 - Netflix Home -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-48 bg-gradient-to-br from-red-600 to-black flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Netflix Home Clone</h3>
+                        <p class="text-gray-600 mb-4">Pixel-perfect Netflix homepage replica with dynamic content</p>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">HTML/CSS</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">JavaScript</span>
+                        </div>
+                        <a href=" https://yegneshkamble72.github.io/Netflix/" target="_blank" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors inline-block">
+                            View Demo →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3 - Weather App -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Weather App</h3>
+                        <p class="text-gray-600 mb-4">Real-time weather application with location-based forecasts</p>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">API</span>
+                        </div>
+                        <a href="https://yegneshkamble72.github.io/Weather/" target="_blank" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors inline-block">
+                            View App →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4 - Portfolio Builder -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Portfolio Builder AI</h3>
+                        <p class="text-gray-600 mb-4">AI-powered website builder for creating professional portfolios</p>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">AI/ML</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm">Python</span>
+                        </div>
+                        <a href="https://portfolio-builder-ai.netlify.app" target="_blank" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors inline-block">
+                            Try Builder →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5 - Auction Platform -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Auction Platform</h3>
+                        <p class="text-gray-600 mb-4">Real-time bidding platform with secure payment integration</p>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm">Node.js</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm">Socket.io</span>
+                        </div>
+                        <a href="https://auction-platform-demo.netlify.app" target="_blank" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors inline-block">
+                            View Platform →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6 - Fake News Detector -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-lg card-hover">
+                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Fake News Detector</h3>
+                        <p class="text-gray-600 mb-4">ML-powered tool to identify and classify fake news articles</p>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">Python</span>
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm">ML</span>
+                        </div>
+                        <a href="https://fake-news-detector.netlify.app" target="_blank" class="text-purple-600 font-semibold hover:text-purple-700 transition-colors inline-block">
+                            Test Detector →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 sm:py-20 bg-gradient-to-br from-purple-600 to-blue-600 text-white relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0">
+            <div class="absolute top-10 left-10 w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-full animate-pulse"></div>
+            <div class="absolute top-32 right-20 w-12 h-12 sm:w-16 sm:h-16 bg-pink-300/20 rounded-full floating" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-40 left-1/4 w-10 h-10 sm:w-12 sm:h-12 bg-yellow-300/20 rounded-full floating" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 right-1/3 w-20 h-20 sm:w-24 sm:h-24 bg-blue-300/10 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+            <div class="absolute top-1/2 left-1/2 w-28 h-28 sm:w-32 sm:h-32 bg-purple-300/10 rounded-full floating" style="animation-delay: 1.5s;"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">Let's Work Together</h2>
+                <p class="text-lg sm:text-xl opacity-90">Ready to bring your ideas to life? Let's create something amazing!</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 sm:gap-12">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Get In Touch</h3>
+                    <div class="space-y-3 sm:space-y-4">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            <span class="text-sm sm:text-base break-all">yegnesh7219@gmail.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                            <span class="text-sm sm:text-base">+91 7219274312</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-3 sm:mr-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            <span class="text-sm sm:text-base">Nagpur 441404, India</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8 justify-center md:justify-start">
+                        <a href="https://www.linkedin.com/in/yegnesh-kamble-3a8669211" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com/yegnesh.kamble" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="https://facebook.com/yegnesh.kamble" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://alvo.chat/5W5a?fbclid=PAdGRjcAMvT8hleHRuA2FlbQIxMQABpzbPk9UGIhE2Nq1N8aIQIJya5YHJOX7pgMl1gVnCon6QNRkuJDD3QLVsSeO__aem_wYtSZhanLIZQYHyoQVxaUw" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8">
+                    <form id="contact-form" class="space-y-4 sm:space-y-6" action="https://formspree.io/f/xpwaqjqr" method="POST">
+                        <div>
+                            <input type="text" name="name" placeholder="Your Name" required class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors text-sm sm:text-base">
+                        </div>
+                        <div>
+                            <input type="email" name="email" placeholder="Your Email" required class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors text-sm sm:text-base">
+                        </div>
+                        <div>
+                            <input type="text" name="subject" placeholder="Subject" class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors text-sm sm:text-base">
+                        </div>
+                        <div>
+                            <textarea rows="4" name="message" placeholder="Your Message" required class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-colors resize-none text-sm sm:text-base"></textarea>
+                        </div>
+                        <button type="submit" id="submit-btn" class="w-full bg-white text-purple-600 py-2 sm:py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors transform hover:scale-105 text-sm sm:text-base">
+                            <span id="btn-text">Send Message</span>
+                            <span id="btn-loading" class="hidden">Sending...</span>
+                        </button>
+                        <div id="form-status" class="text-center text-xs sm:text-sm hidden"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 sm:py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm sm:text-base">&copy; 2024 Yegnesh Kamble. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Animate skill bars on scroll
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        entry.target.style.width = width + '%';
+                    }
+                });
+            });
+
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+        }
+
+        // Dynamic typing animation for hero
+        function dynamicTyping() {
+            const texts = [
+                "Web Developer", 
+                "Video Editor",
+                "UI/UX Designer"
+            ];
+            const element = document.getElementById('dynamic-text');
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            function type() {
+                const currentText = texts[textIndex];
+                
+                if (isDeleting) {
+                    element.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    element.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                let typeSpeed = isDeleting ? 50 : 100;
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    typeSpeed = 2000; // Pause at end
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                    typeSpeed = 500; // Pause before next word
+                }
+                
+                setTimeout(type, typeSpeed);
+            }
+            
+            type();
+        }
+
+        // Mobile menu toggle
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIcon = document.getElementById('menu-icon');
+                const closeIcon = document.getElementById('close-icon');
+                
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            });
+        });
+
+        // Enhanced form submission with real email functionality
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnLoading = document.getElementById('btn-loading');
+            const formStatus = document.getElementById('form-status');
+            const form = e.target;
+            
+            // Show loading state
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            submitBtn.disabled = true;
+            formStatus.classList.add('hidden');
+            
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success
+                    formStatus.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
+                    formStatus.className = 'text-center text-sm text-green-300 bg-green-500/20 p-3 rounded-lg';
+                    form.reset();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                // Error
+                formStatus.textContent = '❌ Oops! There was a problem sending your message. Please try again.';
+                formStatus.className = 'text-center text-sm text-red-300 bg-red-500/20 p-3 rounded-lg';
+            } finally {
+                // Reset button state
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                submitBtn.disabled = false;
+                formStatus.classList.remove('hidden');
+                
+                // Hide status message after 5 seconds
+                setTimeout(() => {
+                    formStatus.classList.add('hidden');
+                }, 5000);
+            }
+        });
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            animateSkillBars();
+            setTimeout(dynamicTyping, 2000);
+        });
+
+        // Enhanced navbar blur effect on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const scrolled = window.pageYOffset;
+            
+            if (scrolled > 50) {
+                navbar.classList.remove('bg-white/70');
+                navbar.classList.add('bg-white/90', 'backdrop-blur-xl', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-xl', 'shadow-lg');
+                navbar.classList.add('bg-white/70');
+            }
+        });
+
+        // Parallax effect for particles
+        window.addEventListener('scroll', function() {
+            const particles = document.querySelectorAll('.particle');
+            const scrolled = window.pageYOffset;
+            
+            particles.forEach((particle, index) => {
+                const speed = 0.5 + (index * 0.1);
+                particle.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97d54ce542f347d4',t:'MTc1NzU3NDE1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
