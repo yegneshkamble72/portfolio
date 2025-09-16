@@ -285,7 +285,7 @@
                 </div>
                 
                 <!-- Name Animation -->
-                <h1 class="text-3xl md:text-5xl font-bold text-white mb-3 tracking-wider">
+                <!-- <h1 class="text-3xl md:text-5xl font-bold text-white mb-3 tracking-wider">
                     <span class="inline-block loader-letter" style="animation-delay: 0.1s;">Y</span>
                     <span class="inline-block loader-letter" style="animation-delay: 0.2s;">E</span>
                     <span class="inline-block loader-letter" style="animation-delay: 0.3s;">G</span>
@@ -294,19 +294,19 @@
                     <span class="inline-block loader-letter" style="animation-delay: 0.6s;">S</span>
                     <span class="inline-block loader-letter" style="animation-delay: 0.7s;">H</span>
                 </h1>
-                <p class="text-white/70 text-lg font-light mb-8">Web Developer & Video Editor</p>
+                <p class="text-white/70 text-lg font-light mb-8">Web Developer & Video Editor</p> -->
             </div>
 
             <!-- Modern Progress Section -->
             <div class="space-y-6">
                 <!-- Animated Dots Loader -->
-                <div class="flex justify-center items-center space-x-2 mb-6">
+                <!-- <div class="flex justify-center items-center space-x-2 mb-6">
                     <div class="dot-loader w-3 h-3 bg-cyan-400 rounded-full"></div>
                     <div class="dot-loader w-3 h-3 bg-purple-400 rounded-full" style="animation-delay: 0.2s;"></div>
                     <div class="dot-loader w-3 h-3 bg-pink-400 rounded-full" style="animation-delay: 0.4s;"></div>
                     <div class="dot-loader w-3 h-3 bg-blue-400 rounded-full" style="animation-delay: 0.6s;"></div>
                     <div class="dot-loader w-3 h-3 bg-indigo-400 rounded-full" style="animation-delay: 0.8s;"></div>
-                </div>
+                </div> -->
 
                 <!-- Progress Bar with Glow -->
                 <div class="w-80 max-w-full mx-auto">
@@ -322,13 +322,13 @@
                 </div>
 
                 <!-- Pulse Animation -->
-                <div class="flex justify-center">
+                <!-- <div class="flex justify-center">
                     <div class="relative">
                         <div class="w-4 h-4 bg-white/30 rounded-full"></div>
                         <div class="absolute inset-0 w-4 h-4 bg-white/20 rounded-full animate-ping"></div>
                         <div class="absolute inset-0 w-4 h-4 bg-white/10 rounded-full animate-ping" style="animation-delay: 0.5s;"></div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Loading Messages -->
@@ -347,6 +347,7 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="#home" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Home</a>
                     <a href="#about" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">About</a>
+                    <a href="#resume" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Resume</a>
                     <a href="#skills" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Skills</a>
                     <a href="#projects" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Projects</a>
                     <a href="#contact" class="text-gray-700 hover:text-purple-600 transition-colors font-medium">Contact</a>
@@ -365,6 +366,7 @@
                 <div class="flex flex-col space-y-4 bg-white/90 backdrop-blur-lg rounded-lg p-4 shadow-lg">
                     <a href="#home" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Home</a>
                     <a href="#about" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">About</a>
+                    <a href="#resume" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Resume</a>                    
                     <a href="#skills" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Skills</a>
                     <a href="#projects" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2 border-b border-gray-200">Projects</a>
                     <a href="#contact" class="text-gray-700 hover:text-purple-600 transition-colors font-medium py-2">Contact</a>
@@ -400,7 +402,7 @@
                     <div class="slide-in-left" style="animation-delay: 0.4s;">
                         <!-- ✅ FIXED: Proper mobile text sizing -->
                         <div class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium mb-3 sm:mb-4">
-                            <span id="dynamic-text" class="typing-animation">Web Developer</span>
+                            <span id="dynamic-text" class="typing-animation"></span>
                         </div>
                         <!-- ✅ FIXED: Mobile padding and responsive text -->
                         <p class="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-lg mx-auto lg:mx-0 px-2 sm:px-0">
@@ -412,6 +414,9 @@
                     <div class="slide-in-left flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start px-4 sm:px-0" style="animation-delay: 0.6s;">
                         <button onclick="scrollToSection('projects')" class="glass-effect px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full font-semibold text-white hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                             🚀 View My Work
+                        </button>
+                         <button onclick="downloadResume()" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full font-semibold hover:from-yellow-500 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap shadow-lg">
+                            📄 Download Resume
                         </button>
                         <button onclick="scrollToSection('contact')" class="bg-white text-purple-600 px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                             💬 Let's Talk
@@ -554,6 +559,93 @@
                         <svg class="w-32 h-32 sm:w-40 sm:h-40 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Resume Section -->
+    <section id="resume" class="py-16 sm:py-20 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">My Resume</h2>
+                <div class="w-20 h-1 bg-purple-600 mx-auto mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Download my complete resume to learn more about my experience, education, and achievements
+                </p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <!-- Resume Preview Header -->
+                    <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 sm:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="text-center md:text-left mb-4 md:mb-0">
+                                <h3 class="text-2xl sm:text-3xl font-bold mb-2">Yegnesh Kamble</h3>
+                                <p class="text-lg opacity-90">Web Developer & Video Editor</p>
+                                <p class="text-sm opacity-75 mt-1">📧 yegnesh7219@gmail.com | 📱 +91 7219274312</p>
+                                <p class="text-sm opacity-75 mt-1">🔗 linkedin.com/in/yegnesh-kamble-3a8669211 </p>
+                                 <span></span>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button onclick="downloadResume()" class="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    Download PDF
+                                </button>
+                                <button onclick="viewResumeOnline()" class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"/>
+                                    </svg>
+                                    View Online
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resume Content Preview -->
+                    <div class="p-6 sm:p-8">
+                        <div class="">
+                            <!-- Left Column -->
+                            <div class="">
+                                <!-- Professional Summary -->
+                                <div>
+                                    <h4 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                                        <div class="w-2 h-6 bg-purple-600 rounded mr-3"></div>
+                                        Professional Summary
+                                    </h4>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Creative and detail-oriented Web Developer and Video Editor with expertise in designing responsive, user-friendly websites and producing engaging multimedia content. Skilled in front-end technologies (HTML, CSS, JavaScript) and modern frameworks, with a strong eye for visual storytelling through video editing. Experienced in collaborating with clients to deliver customized digital solutions that enhance brand identity and audience engagement. Adept at managing multiple projects, troubleshooting technical issues, and ensuring timely, high-quality output.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                           
+                        
+                        <!-- Download Stats -->
+                        <div class="mt-8 pt-6 border-t border-gray-200">
+                            <div class="flex flex-col sm:flex-row items-center justify-between">
+                                <div class="flex items-center space-x-6 mb-4 sm:mb-0">
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-purple-600" id="download-count">10</div>
+                                        <div class="text-sm text-gray-500">Downloads</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-purple-600">PDF</div>
+                                        <div class="text-sm text-gray-500">Format</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-purple-600">2MB</div>
+                                        <div class="text-sm text-gray-500">Size</div>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    Last updated: December 2025
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -960,8 +1052,7 @@
         function dynamicTyping() {
             const texts = [
                 "Web Developer", 
-                "Video Editor",
-                "UI/UX Designer"
+                "Video Editor"
             ];
             const element = document.getElementById('dynamic-text');
             let textIndex = 0;
@@ -1148,6 +1239,191 @@
                 }
                 
             }, 150 + Math.random() * 200); // Random interval between 150-350ms
+        }
+
+
+        // Resume download functionality
+        function downloadResume() {
+            // Create a comprehensive resume PDF content
+            const resumeContent = generateResumeHTML();
+            
+            // Create a new window for printing/saving as PDF
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(resumeContent);
+            printWindow.document.close();
+            
+            // Trigger print dialog (user can save as PDF)
+            setTimeout(() => {
+                printWindow.print();
+                
+                // Update download counter
+                const downloadCount = document.getElementById('download-count');
+                let currentCount = parseInt(downloadCount.textContent);
+                downloadCount.textContent = currentCount + 1;
+                
+                // Store in localStorage
+                localStorage.setItem('resumeDownloads', currentCount + 1);
+            }, 500);
+        }
+
+        function viewResumeOnline() {
+            // Create a modal or new tab with full resume view
+            const resumeContent = generateResumeHTML();
+            const newTab = window.open('', '_blank');
+            newTab.document.write(resumeContent);
+            newTab.document.close();
+        }
+
+        function generateResumeHTML() {
+            return `
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yegnesh Kamble - Resume</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background: white; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .header { text-align: center; margin-bottom: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .section { margin-bottom: 30px; }
+        .section h2 { font-size: 1.5em; color: #667eea; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .experience-item { margin-bottom: 20px; padding-left: 20px; border-left: 3px solid #667eea; }
+        .experience-item h3 { color: #333; font-size: 1.2em; }
+        .experience-item .company { color: #667eea; font-weight: bold; }
+        .experience-item .date { color: #888; font-size: 0.9em; }
+        .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill { background: #f0f0f0; padding: 8px 15px; border-radius: 20px; font-size: 0.9em; }
+        .education-item { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 5px; }
+        @media print { body { font-size: 12px; } .container { padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+         <div class="header">
+                        <h1>Yegnesh Kamble</h1>
+                        <p>Full Stack Developer & Video Editor</p>
+                        <div class="contact-info">
+                            <span>📧 yegnesh7219@gmail.com</span>
+                            <span>📱 +91 7219274312</span>
+                            <span>📍 Nagpur, Maharashtra, India</span><br>
+                            <span>🔗 linkedin.com/in/yegnesh-kamble-3a8669211</span>
+                        </div>
+                    </div>
+
+        <div class="section">
+            <h2>SUMMARY</h2>
+            <p>Creative and detail-oriented Web Developer and Video Editor with expertise in designing responsive, user-friendly websites and producing engaging multimedia content. Skilled in front-end technologies (HTML, CSS, JavaScript) and modern frameworks, with a strong eye for visual storytelling through video editing. Experienced in collaborating with clients to deliver customized digital solutions that enhance brand identity and audience engagement. Adept at managing multiple projects, troubleshooting technical issues, and ensuring timely, high-quality output.</p>
+        </div>
+
+        <div class="section">
+            <h2>TECHNICAL SKILLS</h2>
+            <div class="skills">
+                <span class="skill">Web Development</span>
+                <span class="skill">C/C++</span>
+                <span class="skill">HTML/CSS</span>
+                <span class="skill">JavaScript</span>
+                <span class="skill">DevOps</span>
+                <span class="skill">MSCIT</span>
+                <span class="skill">Teamwork</span>
+                <span class="skill">Time Management</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>PROFESSIONAL EXPERIENCE</h2>
+            
+            <div class="experience-item">
+                <h3>Web Development Intern</h3>
+                <div class="company">Bharat Intern</div>
+                <div class="date">10-January-2024 to 10-February-2024</div>
+                <ul>
+                    <li>Assisted senior developers in Web development tasks</li>
+                    <li>Participated in team meetings and contributed ideas for project improvements</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Web Development Intern</h3>
+                <div class="company">AD Infocom Systems</div>
+                <div class="date">21-December-2023 to 04-January-2024</div>
+                <ul>
+                    <li>Assisted in front-end and back-end development tasks</li>
+                    <li>Provided ideas for enhancing project functionality and user experience</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Salesforce Admin Intern</h3>
+                <div class="company">CSM IT Services Pvt. Ltd.</div>
+                <div class="date">5-January-2023 to 22-February-2023</div>
+                <ul>
+                    <li>Supported senior professionals in Salesforce software development tasks</li>
+                    <li>Including customization, integration, and troubleshooting</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3>Cloud Computing & DevOps Intern</h3>
+                <div class="company">Pegasus Technologies & Software Pvt. Ltd.</div>
+                <div class="date">15-December-2024 to 14-April-2025</div>
+                <ul>
+                    <li>Skilled in AWS, Azure, Docker, Git, Jenkins for automating workflows</li>
+                    <li>Passionate about cloud infrastructure, CI/CD, and building scalable solutions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>EDUCATION</h2>
+            <div class="education-item">
+                <h3>B-Tech [Computer Science & Engineering]</h3>
+                <p><strong>KDK College of Engineering, Nagpur</strong></p>
+                <p>2021-2025 | RTMNU Nagpur</p>
+            </div>
+            <div class="education-item">
+                <h3>12th Science</h3>
+                <p><strong>NSJ College Kandri, Kanhan</strong></p>
+                <p>2019-2021 | MSBSHSE Nagpur</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>ADDITIONAL INFORMATION</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h3>Languages:</h3>
+                    <ul>
+                        <li>Marathi</li>
+                        <li>Hindi</li>
+                        <li>English</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Interests:</h3>
+                    <ul>
+                        <li>Participating in hackathons and coding competitions</li>
+                        <li>Volunteering for community tech initiatives</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>`;
+        }
+
+        // Load download count from localStorage
+        function loadDownloadCount() {
+            const savedCount = localStorage.getItem('resumeDownloads');
+            if (savedCount) {
+                document.getElementById('download-count').textContent = savedCount;
+            }
         }
 
         // Initialize animations
