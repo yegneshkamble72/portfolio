@@ -1467,5 +1467,109 @@
             });
         });
     </script>
+
+
+   <!-- // Hiding the source code -->
+    <script>
+        // Page Source Protection System
+        (function() {
+            'use strict';
+            
+            const sourceProtectionMsg = 'Sorry, do not access the code';
+            
+            // Block View Page Source (Ctrl+U)
+            document.addEventListener('keydown', function(event) {
+                // Block Ctrl+U (View Source)
+                if (event.ctrlKey && (event.key === 'u' || event.key === 'U')) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert(sourceProtectionMsg);
+                    return false;
+                }
+                
+                // Block Ctrl+Shift+I (Developer Tools)
+                if (event.ctrlKey && event.shiftKey && (event.key === 'i' || event.key === 'I')) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert(sourceProtectionMsg);
+                    return false;
+                }
+                
+                // Block F12 (Developer Tools)
+                if (event.key === 'F12') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert(sourceProtectionMsg);
+                    return false;
+                }
+                
+                // Block Ctrl+S (Save Page)
+                if (event.ctrlKey && (event.key === 's' || event.key === 'S')) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert(sourceProtectionMsg);
+                    return false;
+                }
+            });
+            
+            // Block Right-Click Context Menu (which contains "View Page Source")
+            document.addEventListener('contextmenu', function(event) {
+                event.preventDefault();
+                alert(sourceProtectionMsg);
+                return false;
+            });
+            
+            // Disable text selection to prevent copying
+            document.addEventListener('selectstart', function(event) {
+                event.preventDefault();
+                return false;
+            });
+            
+            // Block drag operations
+            document.addEventListener('dragstart', function(event) {
+                event.preventDefault();
+                return false;
+            });
+            
+          
+            // Additional protection: Override common source viewing methods
+            if (window.location && window.location.href) {
+                // Block view-source: protocol
+                if (window.location.href.startsWith('view-source:')) {
+                    window.location.href = 'about:blank';
+                }
+            }
+            
+            // Monitor for attempts to access source
+            let sourceAccessAttempts = 0;
+            
+            // Override document.documentElement.outerHTML
+            Object.defineProperty(document.documentElement, 'outerHTML', {
+                get: function() {
+                    sourceAccessAttempts++;
+                    alert(sourceProtectionMsg);
+                    return '';
+                },
+                set: function() {
+                    alert(sourceProtectionMsg);
+                }
+            });
+            
+            // Override document.documentElement.innerHTML
+            Object.defineProperty(document.documentElement, 'innerHTML', {
+                get: function() {
+                    sourceAccessAttempts++;
+                    alert(sourceProtectionMsg);
+                    return '';
+                },
+                set: function() {
+                    alert(sourceProtectionMsg);
+                }
+            });
+            
+        })();
+    </script>
+
+    
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97d54ce542f347d4',t:'MTc1NzU3NDE1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
