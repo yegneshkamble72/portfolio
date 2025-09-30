@@ -255,6 +255,58 @@
         .loader-fade-out {
             animation: loaderFadeOut 0.8s ease-out forwards;
         }
+
+
+
+        
+ /* Popup Styling */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      background: #fff;
+      color: #333;
+      padding: 25px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
+
+    .popup.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+      animation: bounce 1s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: translate(-50%, -50%) scale(0.7); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .popup button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .popup button:hover {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+    }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -337,6 +389,17 @@
             </div>
         </div>
     </div>
+
+
+
+     <!-- Popup -->
+    <div class="popup" id="popup">
+        <!-- <h3>Alert</h3> -->
+        <p>⚠️ Yegnesh Say : -<br> 🚫Sorry, Do not access the code.</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+
+    
     <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 w-full bg-white/70 backdrop-blur-lg z-50 shadow-sm transition-all duration-300 opacity-0 pointer-events-none">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
@@ -1569,6 +1632,34 @@
             
         })();
     </script>
+
+     <!-- POPUP MASSAGE -->
+
+     <script>
+    const popup = document.getElementById('popup');
+
+    function showPopup() {
+      popup.classList.add('active');
+    }
+
+    function closePopup() {
+      popup.classList.remove('active');
+    }
+
+    // Block Ctrl+U
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && (event.key === 'u' || event.key === 'U')) {
+        event.preventDefault();
+        showPopup();
+      }
+    });
+
+    // Block Right Click
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      showPopup();
+    });
+  </script>
 
     
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97d54ce542f347d4',t:'MTc1NzU3NDE1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
