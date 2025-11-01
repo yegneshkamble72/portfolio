@@ -308,8 +308,73 @@
       background: linear-gradient(135deg, #00f2fe, #4facfe);
     }
     </style>
+
+
+ <style>
+    /* Smooth transitions */
+    .fade-in {
+      animation: fadeIn 1.2s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .fade-out {
+      animation: fadeOut 0.8s ease forwards;
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.95); }
+    }
+
+    /* Background animation */
+    .animated-bg {
+      background: linear-gradient(270deg, #2563eb, #7c3aed, #06b6d4);
+      background-size: 600% 600%;
+      animation: gradientShift 8s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
 </head>
 <body class="bg-gray-50">
+
+   <!-- 🔐 Step 1: Security Verification -->
+  <section id="securityCheck" class="animated-bg flex flex-col justify-center items-center min-h-screen text-white text-center px-6">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-bounce">🔒 Security Verification</h1>
+    <p class="text-lg mb-8">Please verify that you are not a robot to enter the website.</p>
+
+    <!-- reCAPTCHA-style box -->
+    <div class="bg-white text-gray-800 p-6 md:p-8 rounded-xl shadow-2xl w-80 md:w-96 flex flex-col items-center">
+      <div class="flex items-center justify-between w-full">
+        <label class="flex items-center space-x-3 cursor-pointer select-none">
+          <input id="robotCheck" type="checkbox" class="w-6 h-6 border-gray-400">
+          <span class="text-lg font-medium">I'm not a robot</span>
+        </label>
+
+        <!-- 🤖 robot icon -->
+        <div class="flex items-center justify-center border border-gray-300 rounded-md p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25M7.5 3h9a2.25 2.25 0 012.25 2.25V9H5.25V5.25A2.25 2.25 0 017.5 3zM3 9h18v8.25a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 17.25V9zM8.25 14.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm9 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+          </svg>
+        </div>
+      </div>
+
+      <div id="loadingText" class="hidden mt-6 text-blue-600 font-medium animate-pulse">Verifying...</div>
+      <div id="verifiedText" class="hidden mt-6 text-green-600 font-semibold">✅ Verified! Loading Website...</div>
+    </div>
+
+    <footer class="mt-10 text-sm opacity-75">
+      © 2025 Secure Access by Yegnesh Kamble
+    </footer>
+  </section>
+
+
+<main id="mainWebsite" class="hidden opacity-0">
     <!-- New Attractive Loader -->
     <div id="loader" class="fixed inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 z-50 flex items-center justify-center overflow-hidden">
         <!-- Animated Background Grid -->
@@ -1081,9 +1146,50 @@
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-6 sm:py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
-            <p class="text-sm sm:text-base">&copy; 2024 Yegnesh Kamble. All rights reserved.</p>
+            <p class="text-sm sm:text-base">&copy; 2025 Yegnesh Kamble. All rights reserved.</p>
         </div>
     </footer>
+</main>
+
+<!-- ⚙️ JavaScript -->
+  <script>
+    const checkbox = document.getElementById("robotCheck");
+    const loadingText = document.getElementById("loadingText");
+    const verifiedText = document.getElementById("verifiedText");
+    const securityCheck = document.getElementById("securityCheck");
+    const mainWebsite = document.getElementById("mainWebsite");
+
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        loadingText.classList.remove("hidden");
+
+        // Simulate verification delay
+        setTimeout(() => {
+          loadingText.classList.add("hidden");
+          verifiedText.classList.remove("hidden");
+
+          // After short pause, open main site
+          setTimeout(() => {
+            securityCheck.classList.add("fade-out");
+
+            setTimeout(() => {
+              securityCheck.style.display = "none";
+              mainWebsite.classList.remove("hidden");
+              mainWebsite.classList.add("fade-in");
+              mainWebsite.style.opacity = 1;
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }, 800);
+          }, 1000);
+        }, 1500);
+      }
+    });
+  </script>
+
+
+
+
+
+
 
     <script>
         // Smooth scrolling
