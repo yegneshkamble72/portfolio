@@ -1,101 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WhatsApp Bulk Auto Thank You</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bulk WhatsApp Sender — Mobile Friendly</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+<body class="min-h-screen bg-gradient-to-b from-white to-gray-50 p-4 flex items-start justify-center">
+  <div class="w-full max-w-lg bg-white rounded-2xl shadow p-5">
+    <header class="mb-4">
+      <h1 class="text-2xl font-bold text-green-600 text-center">Bulk WhatsApp Sender</h1>
+      <p class="text-sm text-gray-500 text-center mt-1">Mobile responsive — generate links or open all (may be popup-blocked)</p>
+    </header>
 
-  <div class="w-full max-w-md bg-white shadow-lg rounded-2xl p-6">
-    <h1 class="text-xl font-semibold text-center mb-4">WhatsApp Auto Thank You (Bulk)</h1>
+    <label class="block text-sm font-medium text-gray-700">Numbers (one per line)</label>
+    <textarea id="numbers" rows="6" placeholder="9876543210
++919876543210
+919012345678"
+      class="mt-1 block w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-200"></textarea>
 
-    <div class="space-y-4">
+    <label class="block text-sm font-medium text-gray-700 mt-3">Message</label>
+    <textarea id="message" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-200">Thank you so much for the wishes! 😊</textarea>
 
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Phone Numbers (One per line)</label>
-        <textarea id="numbers" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-300 outline-none" 
-        rows="5" placeholder="9876543210
-9876501234
-9012345678"></textarea>
-      </div>
+    <div class="flex gap-2 mt-4">
+      <button id="openAllBtn" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold">Open All (try)</button>
+      <button id="linksBtn" class="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold">Generate Links</button>
+    </div>
 
-      <div>
-        <label class="block text-sm text-gray-600 mb-1">Message</label>
-        <textarea id="message" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-300 outline-none" 
-        rows="3">Thank you so much for the wishes! 😊</textarea>
-      </div>
+    <div class="flex gap-2 mt-3">
+      <input id="delay" type="number" min="200" value="800" class="w-28 px-3 py-2 border rounded-lg" />
+      <div class="flex-1 text-xs text-gray-500 pt-2">Delay (ms) between openings — increase if popups blocked on mobile</div>
+    </div>
 
-      <button onclick="sendBulk()" class="w-full py-3 rounded-xl bg-green-500 text-white font-semibold hover:opacity-90">
-        Send to All Numbers
-      </button>
+    <div class="mt-4">
+      <button id="copyAll" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg">Copy All Links</button>
     </div>
 
     <hr class="my-4" />
 
-    <h2 class="text-sm font-semibold mb-2">Recent Sent</h2>
-    <div id="history" class="space-y-2 max-h-48 overflow-y-auto text-sm"></div>
+    <div id="linksArea" class="space-y-2 max-h-52 overflow-auto"></div>
 
+    <footer class="mt-4 text-center text-xs text-gray-400">Note: For true automatic replies you need WhatsApp Business API or Android auto-responder apps.</footer>
   </div>
 
-  <script>
-    function clean(n) {
-      return n.replace(/[^0-9]/g, "");
+<script>
+/*
+Behavior:
+ - sanitize numbers: remove non-digits
+ - if number length === 10 -> assume India and prefix 91
+ - preferred open URL: api.whatsapp.com/send?phone=<full>&text=<encoded>
+ - Open All: attempts to open each in new tab with a delay (mobile may block multiple popups)
+ - Generate Links: build clickable list for manual tap (recommended for mobile)
+*/
+
+function sanitizeNumber(raw) {
+  if (!raw) return null;
+  const digits = raw.replace(/[^0-9]/g, '');
+  if (digits.length === 10) return '91' + digits;           // assume India
+  if (digits.length === 12 && digits.startsWith('91')) return digits; // already with 91
+  if (digits.length >= 11) return digits; // other country codes included
+  return null;
+}
+
+function buildUrl(fullNumber, message) {
+  const encoded = encodeURIComponent(message || '');
+  return `https://api.whatsapp.com/send?phone=${fullNumber}&text=${encoded}`;
+}
+
+function getNumbersList() {
+  const raw = document.getElementById('numbers').value || '';
+  // split by new line or comma or semicolon
+  const parts = raw.split(/\r?\n|,|;/).map(s => s.trim()).filter(Boolean);
+  const cleaned = parts.map(sanitizeNumber).filter(Boolean);
+  return cleaned;
+}
+
+function showLinks(message, numbers) {
+  const area = document.getElementById('linksArea');
+  area.innerHTML = '';
+  if (!numbers.length) {
+    area.innerHTML = '<div class="text-sm text-gray-400">No valid numbers found.</div>';
+    return;
+  }
+
+  numbers.forEach(n => {
+    const url = buildUrl(n, message);
+    const row = document.createElement('div');
+    row.className = 'flex items-center justify-between p-2 border rounded-lg';
+    row.innerHTML = `
+      <div class="text-sm break-all"><strong>+${n}</strong><div class="text-xs text-gray-500">${decodeURIComponent(url.split('&text=')[1]||'')}</div></div>
+      <div class="flex gap-2 ml-3">
+        <a class="px-3 py-1 bg-green-50 text-green-700 rounded-lg text-sm" href="${url}" target="_blank" rel="noopener">Open</a>
+        <button class="px-3 py-1 bg-gray-100 rounded-lg text-sm copy-link">Copy</button>
+      </div>
+    `;
+    // copy link button handler
+    row.querySelector('.copy-link').addEventListener('click', () => {
+      navigator.clipboard.writeText(url).then(()=> alert('Link copied'));
+    });
+    area.appendChild(row);
+  });
+}
+
+document.getElementById('linksBtn').addEventListener('click', () => {
+  const message = document.getElementById('message').value || '';
+  const numbers = getNumbersList();
+  showLinks(message, numbers);
+});
+
+// "Open All" with delay (may be popup-blocked on mobile; user gesture helps)
+document.getElementById('openAllBtn').addEventListener('click', async () => {
+  const message = document.getElementById('message').value || '';
+  const numbers = getNumbersList();
+  if (!numbers.length) {
+    alert('Please enter at least one valid number.');
+    return;
+  }
+  const delay = Math.max(200, parseInt(document.getElementById('delay').value || '800', 10));
+
+  // Try sequentially opening windows/tabs
+  for (let i = 0; i < numbers.length; i++) {
+    const url = buildUrl(numbers[i], message);
+    // On mobile many browsers block multiple window.open; user may need to tap each link instead.
+    // We try window.open first; if blocked, fallback will be to create a visible link list (Generate Links).
+    const win = window.open(url, '_blank');
+    if (!win) {
+      alert('Browser blocked popups. Generating clickable links below — please tap them manually.');
+      showLinks(message, numbers);
+      return;
     }
+    // small delay before next
+    await new Promise(r => setTimeout(r, delay));
+  }
+});
 
-    function getHistory() {
-      return JSON.parse(localStorage.getItem("wa_hist") || "[]");
-    }
+// Copy all generated links to clipboard
+document.getElementById('copyAll').addEventListener('click', () => {
+  const message = document.getElementById('message').value || '';
+  const numbers = getNumbersList();
+  if (!numbers.length) { alert('No valid numbers'); return; }
+  const all = numbers.map(n => buildUrl(n, message)).join('\\n');
+  navigator.clipboard.writeText(all).then(()=> alert('All links copied to clipboard'));
+});
 
-    function saveHistory(h) {
-      localStorage.setItem("wa_hist", JSON.stringify(h));
-    }
-
-    function showHistory() {
-      const box = document.getElementById("history");
-      const list = getHistory();
-
-      box.innerHTML = list.length === 0 
-        ? `<div class='text-gray-400'>No history yet</div>`
-        : list.map(e => `
-          <div class='p-2 border rounded-lg flex justify-between'>
-            <div>
-              <div class='font-medium'>+91 ${e.num}</div>
-              <div class='text-gray-500 text-xs'>${e.msg}</div>
-            </div>
-            <button onclick="openWA('${e.num}','${e.msg}')" class='text-green-600 text-sm'>Open</button>
-          </div>`).join("");
-    }
-
-    function openWA(num, msg) {
-      const url = `https://api.whatsapp.com/send?phone=91${num}&text=${encodeURIComponent(msg)}`;
-      window.location.href = url; 
-    }
-
-    function sendBulk() {
-      const input = document.getElementById("numbers").value.trim();
-      const msg = document.getElementById("message").value.trim();
-
-      if (!input) return alert("Enter at least one phone number");
-
-      // 🔥 FIXED LINE
-      const nums = input.split(/\n|,/).map(n => clean(n)).filter(n => n.length >= 10);
-
-      if (nums.length === 0) return alert("Enter valid numbers");
-
-      nums.forEach(num => {
-        openWA(num, msg);
-        const h = getHistory();
-        h.unshift({ num, msg });
-        saveHistory(h.slice(0, 50));
-      });
-
-      showHistory();
-    }
-
-    showHistory();
-  </script>
-
+// convenience: paste sample numbers on first load if empty
+window.addEventListener('load', () => {
+  const t = document.getElementById('numbers');
+  if (!t.value.trim()) {
+    t.value = '9876543210\\n9876501234\\n9012345678';
+  }
+});
+</script>
 </body>
 </html>
