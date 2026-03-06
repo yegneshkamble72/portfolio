@@ -165,7 +165,29 @@ Leave
 </div>
 
 
+<script>
 
+setInterval(function(){
+
+var before = new Date().getTime();
+
+debugger;
+
+var after = new Date().getTime();
+
+if(after - before > 100){
+
+document.body.innerHTML="Access Denied";
+
+}
+
+},1000);
+
+</script>
+
+
+
+  
 <script>
 
 let peer
