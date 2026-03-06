@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>YK Live Meet</title>
+<title>YK Meet</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
@@ -18,7 +18,7 @@ background:#0f172a;
 
 video{
 width:100%;
-border-radius:10px;
+border-radius:12px;
 }
 
 </style>
@@ -32,40 +32,38 @@ border-radius:10px;
 <header class="flex justify-between items-center p-4 border-b border-slate-700">
 
 <h1 class="text-xl font-bold">
-🎥 YK Live Meeting
+🎥 YK Meet
 </h1>
 
-<a href="#help" class="text-blue-400 text-sm">
-Help
-</a>
+<button onclick="toggleParticipants()" class="text-sm bg-slate-700 px-3 py-1 rounded">
+Participants
+</button>
 
 </header>
 
 
-<div class="max-w-7xl mx-auto p-4">
+<div class="flex">
+
+<!-- VIDEO AREA -->
+
+<div class="flex-1 p-4">
 
 <!-- MEETING PANEL -->
 
-<div class="bg-slate-800 p-6 rounded-xl">
-
-<h2 class="text-lg mb-4">
-Start or Join Meeting
-</h2>
+<div class="bg-slate-800 p-4 rounded-xl mb-4">
 
 <div class="flex flex-wrap gap-3">
 
-<input
-id="roomID"
+<input id="roomID"
 placeholder="Meeting ID"
-class="p-3 rounded bg-slate-900 border border-slate-600 flex-1"
-/>
+class="p-3 bg-slate-900 border border-slate-600 rounded flex-1"/>
 
 <button onclick="generateMeetingID()"
 class="bg-purple-600 px-4 py-2 rounded">
-Generate ID
+Generate
 </button>
 
-<button onclick="createMeeting()"
+<button onclick="startMeeting()"
 class="bg-green-600 px-4 py-2 rounded">
 Start
 </button>
@@ -77,7 +75,7 @@ Join
 
 <button onclick="copyLink()"
 class="bg-indigo-600 px-4 py-2 rounded">
-Share Link
+Share
 </button>
 
 </div>
@@ -87,15 +85,62 @@ Share Link
 
 <!-- VIDEO GRID -->
 
-<div
-id="videoGrid"
-class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+<div id="videoGrid"
+class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+</div>
+
 </div>
 
 
-<!-- CONTROLS -->
+<!-- SIDEBAR -->
 
-<div class="flex flex-wrap gap-3 mt-6">
+<div id="sidebar"
+class="w-72 bg-slate-800 border-l border-slate-700 p-4 hidden md:block">
+
+<h3 class="font-bold mb-3">
+Participants
+</h3>
+
+<ul id="participantList" class="text-sm space-y-2">
+
+<li>Host</li>
+
+</ul>
+
+
+<hr class="my-4 border-slate-700">
+
+
+<h3 class="font-bold mb-2">
+Chat
+</h3>
+
+<div id="chatBox"
+class="bg-slate-900 h-40 overflow-y-auto p-2 rounded text-sm">
+</div>
+
+<div class="flex gap-2 mt-2">
+
+<input id="chatInput"
+class="flex-1 p-2 bg-slate-900 border border-slate-600 rounded"
+placeholder="Message"/>
+
+<button onclick="sendChat()"
+class="bg-indigo-600 px-3 py-2 rounded">
+Send
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FLOATING CONTROLS -->
+
+<div
+class="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-slate-800 p-3 rounded-xl shadow-lg">
 
 <button onclick="toggleMic()" class="bg-yellow-500 text-black px-4 py-2 rounded">
 Mic
@@ -106,76 +151,16 @@ Camera
 </button>
 
 <button onclick="shareScreen()" class="bg-blue-600 px-4 py-2 rounded">
-Screen Share
+Share Screen
+</button>
+
+<button onclick="raiseHand()" class="bg-orange-500 px-4 py-2 rounded">
+✋
 </button>
 
 <button onclick="leaveMeeting()" class="bg-red-600 px-4 py-2 rounded">
 Leave
 </button>
-
-</div>
-
-
-<!-- CHAT -->
-
-<div class="bg-slate-800 mt-6 p-4 rounded-xl">
-
-<h3 class="mb-2">
-💬 Live Chat
-</h3>
-
-<div
-id="chatBox"
-class="bg-slate-900 h-40 overflow-y-auto p-2 rounded text-sm">
-</div>
-
-<div class="flex gap-2 mt-2">
-
-<input
-id="chatInput"
-placeholder="Type message"
-class="flex-1 p-2 bg-slate-900 border border-slate-600 rounded"
-/>
-
-<button onclick="sendChat()"
-class="bg-indigo-600 px-4 py-2 rounded">
-Send
-</button>
-
-</div>
-
-</div>
-
-
-<!-- HELP -->
-
-<section id="help" class="mt-10 bg-slate-800 p-6 rounded-xl">
-
-<h2 class="text-xl font-bold mb-4">
-Help
-</h2>
-
-<p class="text-gray-300 mb-2">
-1. Click Generate ID to create meeting ID.
-</p>
-
-<p class="text-gray-300 mb-2">
-2. Host clicks Start Meeting.
-</p>
-
-<p class="text-gray-300 mb-2">
-3. Share meeting link with others.
-</p>
-
-<p class="text-gray-300 mb-2">
-4. Participants join using same ID.
-</p>
-
-<p class="text-gray-300 mb-2">
-5. Use camera, mic and screen share controls.
-</p>
-
-</section>
 
 </div>
 
@@ -187,18 +172,18 @@ let peer
 let stream
 let room
 
-// AUTO MEETING ID
+// GENERATE MEETING ID
 
 function generateMeetingID(){
 
-let id=Math.random().toString(36).substring(2,8)
+let id=Math.random().toString(36).substring(2,9)
 
 document.getElementById("roomID").value=id
 
 }
 
 
-// CAMERA START
+// MEDIA
 
 async function startMedia(){
 
@@ -210,7 +195,6 @@ audio:true
 addVideo(stream,true)
 
 }
-
 
 function addVideo(stream,muted=false){
 
@@ -226,9 +210,9 @@ document.getElementById("videoGrid").appendChild(video)
 }
 
 
-// CREATE MEETING
+// START MEETING
 
-async function createMeeting(){
+async function startMeeting(){
 
 room=document.getElementById("roomID").value
 
@@ -245,8 +229,6 @@ addVideo(remote)
 })
 
 })
-
-alert("Meeting Started")
 
 }
 
@@ -309,11 +291,41 @@ addVideo(screen)
 }
 
 
-// LEAVE
+// CHAT
 
-function leaveMeeting(){
+function sendChat(){
 
-location.reload()
+let msg=document.getElementById("chatInput").value
+
+let box=document.getElementById("chatBox")
+
+box.innerHTML+=`<div>👤 ${msg}</div>`
+
+box.scrollTop=box.scrollHeight
+
+document.getElementById("chatInput").value=""
+
+}
+
+
+// RAISE HAND
+
+function raiseHand(){
+
+let box=document.getElementById("chatBox")
+
+box.innerHTML+=`<div class="text-yellow-400">✋ Someone raised hand</div>`
+
+}
+
+
+// PARTICIPANT SIDEBAR
+
+function toggleParticipants(){
+
+let bar=document.getElementById("sidebar")
+
+bar.classList.toggle("hidden")
 
 }
 
@@ -333,19 +345,11 @@ alert("Meeting link copied")
 }
 
 
-// CHAT
+// LEAVE
 
-function sendChat(){
+function leaveMeeting(){
 
-let msg=document.getElementById("chatInput").value
-
-let box=document.getElementById("chatBox")
-
-box.innerHTML+=`<div>👤 ${msg}</div>`
-
-box.scrollTop=box.scrollHeight
-
-document.getElementById("chatInput").value=""
+location.reload()
 
 }
 
