@@ -1,155 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bulk WhatsApp Sender — Mobile Friendly</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>YK Live Meet</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
+<style>
+
+body{
+background:#0f172a;
+}
+
+video{
+width:100%;
+border-radius:10px;
+}
+
+</style>
+
 </head>
-<body class="min-h-screen bg-gradient-to-b from-white to-gray-50 p-4 flex items-start justify-center">
-  <div class="w-full max-w-lg bg-white rounded-2xl shadow p-5">
-    <header class="mb-4">
-      <h1 class="text-2xl font-bold text-green-600 text-center">Bulk WhatsApp Sender</h1>
-      <p class="text-sm text-gray-500 text-center mt-1">Mobile responsive — generate links or open all (may be popup-blocked)</p>
-    </header>
 
-    <label class="block text-sm font-medium text-gray-700">Numbers (one per line)</label>
-    <textarea id="numbers" rows="6" placeholder="9876543210
-+919876543210
-919012345678"
-      class="mt-1 block w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-200"></textarea>
+<body class="text-white">
 
-    <label class="block text-sm font-medium text-gray-700 mt-3">Message</label>
-    <textarea id="message" rows="3" class="mt-1 block w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-200">Thank you so much for the wishes! 😊</textarea>
+<!-- HEADER -->
 
-    <div class="flex gap-2 mt-4">
-      <button id="openAllBtn" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold">Open All (try)</button>
-      <button id="linksBtn" class="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold">Generate Links</button>
-    </div>
+<header class="flex justify-between items-center p-4 border-b border-slate-700">
 
-    <div class="flex gap-2 mt-3">
-      <input id="delay" type="number" min="200" value="800" class="w-28 px-3 py-2 border rounded-lg" />
-      <div class="flex-1 text-xs text-gray-500 pt-2">Delay (ms) between openings — increase if popups blocked on mobile</div>
-    </div>
+<h1 class="text-xl font-bold">
+🎥 YK Live Meeting
+</h1>
 
-    <div class="mt-4">
-      <button id="copyAll" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg">Copy All Links</button>
-    </div>
+<a href="#help" class="text-blue-400 text-sm">
+Help
+</a>
 
-    <hr class="my-4" />
+</header>
 
-    <div id="linksArea" class="space-y-2 max-h-52 overflow-auto"></div>
 
-    <footer class="mt-4 text-center text-xs text-gray-400">Note: For true automatic replies you need WhatsApp Business API or Android auto-responder apps.</footer>
-  </div>
+<div class="max-w-7xl mx-auto p-4">
+
+<!-- MEETING PANEL -->
+
+<div class="bg-slate-800 p-6 rounded-xl">
+
+<h2 class="text-lg mb-4">
+Start or Join Meeting
+</h2>
+
+<div class="flex flex-wrap gap-3">
+
+<input
+id="roomID"
+placeholder="Meeting ID"
+class="p-3 rounded bg-slate-900 border border-slate-600 flex-1"
+/>
+
+<button onclick="generateMeetingID()"
+class="bg-purple-600 px-4 py-2 rounded">
+Generate ID
+</button>
+
+<button onclick="createMeeting()"
+class="bg-green-600 px-4 py-2 rounded">
+Start
+</button>
+
+<button onclick="joinMeeting()"
+class="bg-blue-600 px-4 py-2 rounded">
+Join
+</button>
+
+<button onclick="copyLink()"
+class="bg-indigo-600 px-4 py-2 rounded">
+Share Link
+</button>
+
+</div>
+
+</div>
+
+
+<!-- VIDEO GRID -->
+
+<div
+id="videoGrid"
+class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+</div>
+
+
+<!-- CONTROLS -->
+
+<div class="flex flex-wrap gap-3 mt-6">
+
+<button onclick="toggleMic()" class="bg-yellow-500 text-black px-4 py-2 rounded">
+Mic
+</button>
+
+<button onclick="toggleCam()" class="bg-purple-600 px-4 py-2 rounded">
+Camera
+</button>
+
+<button onclick="shareScreen()" class="bg-blue-600 px-4 py-2 rounded">
+Screen Share
+</button>
+
+<button onclick="leaveMeeting()" class="bg-red-600 px-4 py-2 rounded">
+Leave
+</button>
+
+</div>
+
+
+<!-- CHAT -->
+
+<div class="bg-slate-800 mt-6 p-4 rounded-xl">
+
+<h3 class="mb-2">
+💬 Live Chat
+</h3>
+
+<div
+id="chatBox"
+class="bg-slate-900 h-40 overflow-y-auto p-2 rounded text-sm">
+</div>
+
+<div class="flex gap-2 mt-2">
+
+<input
+id="chatInput"
+placeholder="Type message"
+class="flex-1 p-2 bg-slate-900 border border-slate-600 rounded"
+/>
+
+<button onclick="sendChat()"
+class="bg-indigo-600 px-4 py-2 rounded">
+Send
+</button>
+
+</div>
+
+</div>
+
+
+<!-- HELP -->
+
+<section id="help" class="mt-10 bg-slate-800 p-6 rounded-xl">
+
+<h2 class="text-xl font-bold mb-4">
+Help
+</h2>
+
+<p class="text-gray-300 mb-2">
+1. Click Generate ID to create meeting ID.
+</p>
+
+<p class="text-gray-300 mb-2">
+2. Host clicks Start Meeting.
+</p>
+
+<p class="text-gray-300 mb-2">
+3. Share meeting link with others.
+</p>
+
+<p class="text-gray-300 mb-2">
+4. Participants join using same ID.
+</p>
+
+<p class="text-gray-300 mb-2">
+5. Use camera, mic and screen share controls.
+</p>
+
+</section>
+
+</div>
+
+
 
 <script>
-/*
-Behavior:
- - sanitize numbers: remove non-digits
- - if number length === 10 -> assume India and prefix 91
- - preferred open URL: api.whatsapp.com/send?phone=<full>&text=<encoded>
- - Open All: attempts to open each in new tab with a delay (mobile may block multiple popups)
- - Generate Links: build clickable list for manual tap (recommended for mobile)
-*/
 
-function sanitizeNumber(raw) {
-  if (!raw) return null;
-  const digits = raw.replace(/[^0-9]/g, '');
-  if (digits.length === 10) return '91' + digits;           // assume India
-  if (digits.length === 12 && digits.startsWith('91')) return digits; // already with 91
-  if (digits.length >= 11) return digits; // other country codes included
-  return null;
+let peer
+let stream
+let room
+
+// AUTO MEETING ID
+
+function generateMeetingID(){
+
+let id=Math.random().toString(36).substring(2,8)
+
+document.getElementById("roomID").value=id
+
 }
 
-function buildUrl(fullNumber, message) {
-  const encoded = encodeURIComponent(message || '');
-  return `https://api.whatsapp.com/send?phone=${fullNumber}&text=${encoded}`;
+
+// CAMERA START
+
+async function startMedia(){
+
+stream=await navigator.mediaDevices.getUserMedia({
+video:true,
+audio:true
+})
+
+addVideo(stream,true)
+
 }
 
-function getNumbersList() {
-  const raw = document.getElementById('numbers').value || '';
-  // split by new line or comma or semicolon
-  const parts = raw.split(/\r?\n|,|;/).map(s => s.trim()).filter(Boolean);
-  const cleaned = parts.map(sanitizeNumber).filter(Boolean);
-  return cleaned;
+
+function addVideo(stream,muted=false){
+
+let video=document.createElement("video")
+
+video.srcObject=stream
+video.autoplay=true
+video.playsInline=true
+video.muted=muted
+
+document.getElementById("videoGrid").appendChild(video)
+
 }
 
-function showLinks(message, numbers) {
-  const area = document.getElementById('linksArea');
-  area.innerHTML = '';
-  if (!numbers.length) {
-    area.innerHTML = '<div class="text-sm text-gray-400">No valid numbers found.</div>';
-    return;
-  }
 
-  numbers.forEach(n => {
-    const url = buildUrl(n, message);
-    const row = document.createElement('div');
-    row.className = 'flex items-center justify-between p-2 border rounded-lg';
-    row.innerHTML = `
-      <div class="text-sm break-all"><strong>+${n}</strong><div class="text-xs text-gray-500">${decodeURIComponent(url.split('&text=')[1]||'')}</div></div>
-      <div class="flex gap-2 ml-3">
-        <a class="px-3 py-1 bg-green-50 text-green-700 rounded-lg text-sm" href="${url}" target="_blank" rel="noopener">Open</a>
-        <button class="px-3 py-1 bg-gray-100 rounded-lg text-sm copy-link">Copy</button>
-      </div>
-    `;
-    // copy link button handler
-    row.querySelector('.copy-link').addEventListener('click', () => {
-      navigator.clipboard.writeText(url).then(()=> alert('Link copied'));
-    });
-    area.appendChild(row);
-  });
+// CREATE MEETING
+
+async function createMeeting(){
+
+room=document.getElementById("roomID").value
+
+await startMedia()
+
+peer=new Peer(room)
+
+peer.on("call",call=>{
+
+call.answer(stream)
+
+call.on("stream",remote=>{
+addVideo(remote)
+})
+
+})
+
+alert("Meeting Started")
+
 }
 
-document.getElementById('linksBtn').addEventListener('click', () => {
-  const message = document.getElementById('message').value || '';
-  const numbers = getNumbersList();
-  showLinks(message, numbers);
-});
 
-// "Open All" with delay (may be popup-blocked on mobile; user gesture helps)
-document.getElementById('openAllBtn').addEventListener('click', async () => {
-  const message = document.getElementById('message').value || '';
-  const numbers = getNumbersList();
-  if (!numbers.length) {
-    alert('Please enter at least one valid number.');
-    return;
-  }
-  const delay = Math.max(200, parseInt(document.getElementById('delay').value || '800', 10));
+// JOIN MEETING
 
-  // Try sequentially opening windows/tabs
-  for (let i = 0; i < numbers.length; i++) {
-    const url = buildUrl(numbers[i], message);
-    // On mobile many browsers block multiple window.open; user may need to tap each link instead.
-    // We try window.open first; if blocked, fallback will be to create a visible link list (Generate Links).
-    const win = window.open(url, '_blank');
-    if (!win) {
-      alert('Browser blocked popups. Generating clickable links below — please tap them manually.');
-      showLinks(message, numbers);
-      return;
-    }
-    // small delay before next
-    await new Promise(r => setTimeout(r, delay));
-  }
-});
+async function joinMeeting(){
 
-// Copy all generated links to clipboard
-document.getElementById('copyAll').addEventListener('click', () => {
-  const message = document.getElementById('message').value || '';
-  const numbers = getNumbersList();
-  if (!numbers.length) { alert('No valid numbers'); return; }
-  const all = numbers.map(n => buildUrl(n, message)).join('\\n');
-  navigator.clipboard.writeText(all).then(()=> alert('All links copied to clipboard'));
-});
+room=document.getElementById("roomID").value
 
-// convenience: paste sample numbers on first load if empty
-window.addEventListener('load', () => {
-  const t = document.getElementById('numbers');
-  if (!t.value.trim()) {
-    t.value = '9876543210\\n9876501234\\n9012345678';
-  }
-});
+await startMedia()
+
+peer=new Peer()
+
+peer.on("open",id=>{
+
+let call=peer.call(room,stream)
+
+call.on("stream",remote=>{
+addVideo(remote)
+})
+
+})
+
+}
+
+
+// MIC
+
+function toggleMic(){
+
+let track=stream.getAudioTracks()[0]
+
+track.enabled=!track.enabled
+
+}
+
+
+// CAMERA
+
+function toggleCam(){
+
+let track=stream.getVideoTracks()[0]
+
+track.enabled=!track.enabled
+
+}
+
+
+// SCREEN SHARE
+
+async function shareScreen(){
+
+let screen=await navigator.mediaDevices.getDisplayMedia({
+video:true
+})
+
+addVideo(screen)
+
+}
+
+
+// LEAVE
+
+function leaveMeeting(){
+
+location.reload()
+
+}
+
+
+// COPY LINK
+
+function copyLink(){
+
+let id=document.getElementById("roomID").value
+
+let link=location.href+"?room="+id
+
+navigator.clipboard.writeText(link)
+
+alert("Meeting link copied")
+
+}
+
+
+// CHAT
+
+function sendChat(){
+
+let msg=document.getElementById("chatInput").value
+
+let box=document.getElementById("chatBox")
+
+box.innerHTML+=`<div>👤 ${msg}</div>`
+
+box.scrollTop=box.scrollHeight
+
+document.getElementById("chatInput").value=""
+
+}
+
+
+// AUTO ROOM FROM LINK
+
+const params=new URLSearchParams(window.location.search)
+
+const roomParam=params.get("room")
+
+if(roomParam){
+
+document.getElementById("roomID").value=roomParam
+
+}
+
 </script>
+
 </body>
 </html>
