@@ -1,133 +1,100 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>YK Meet</title>
+<title>YK Official Video Player</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 
 <style>
 
 body{
-background:#0f172a;
+background:#000;
 }
 
-video{
-width:100%;
-border-radius:12px;
+video::-webkit-media-controls{
+display:none !important;
+}
+
+.controls{
+transition:0.3s;
+}
+
+.hide{
+opacity:0;
 }
 
 </style>
 
 </head>
 
-<body class="text-white">
 
-<!-- HEADER -->
+<body class="flex items-center justify-center min-h-screen p-6">
 
-<header class="flex justify-between items-center p-4 border-b border-slate-700">
 
-<h1 class="text-xl font-bold">
-🎥 YK Meet
-</h1>
+<div class="w-full max-w-5xl">
 
-<button onclick="toggleParticipants()" class="text-sm bg-slate-700 px-3 py-1 rounded">
-Participants
+
+<!-- PLAYER -->
+
+<div id="playerBox" class="hidden relative rounded-xl overflow-hidden bg-black shadow-2xl">
+
+<!-- CLOSE -->
+
+<button onclick="closeVideo()"
+class="absolute top-3 right-3 z-50 bg-black/70 px-3 py-1 rounded text-white text-lg">
+
+✕
+
 </button>
 
-</header>
+
+<video id="video" class="w-full h-[65vh] bg-black"></video>
 
 
-<div class="flex">
+<!-- CONTROLS -->
 
-<!-- VIDEO AREA -->
+<div id="controls"
+class="absolute bottom-0 w-full bg-gradient-to-t from-black/90 p-3 space-y-2">
 
-<div class="flex-1 p-4">
 
-<!-- MEETING PANEL -->
+<input id="progress" type="range" value="0" class="w-full">
 
-<div class="bg-slate-800 p-4 rounded-xl mb-4">
 
-<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-3 flex-wrap text-white text-sm">
 
-<input id="roomID"
-placeholder="Meeting ID"
-class="p-3 bg-slate-900 border border-slate-600 rounded flex-1"/>
+<button id="play" class="px-3 py-1 bg-gray-800 rounded">▶</button>
 
-<button onclick="generateMeetingID()"
-class="bg-purple-600 px-4 py-2 rounded">
-Generate
+<button id="back" class="px-3 py-1 bg-gray-800 rounded">
+⏪ 10s
 </button>
 
-<button onclick="startMeeting()"
-class="bg-green-600 px-4 py-2 rounded">
-Start
+<button id="forward" class="px-3 py-1 bg-gray-800 rounded">
+10s ⏩
 </button>
 
-<button onclick="joinMeeting()"
-class="bg-blue-600 px-4 py-2 rounded">
-Join
-</button>
 
-<button onclick="copyLink()"
-class="bg-indigo-600 px-4 py-2 rounded">
-Share
-</button>
-
-</div>
-
-</div>
+<input id="volume" type="range"
+min="0" max="1" step="0.01" value="1">
 
 
-<!-- VIDEO GRID -->
-
-<div id="videoGrid"
-class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-</div>
-
-</div>
-
-
-<!-- SIDEBAR -->
-
-<div id="sidebar"
-class="w-72 bg-slate-800 border-l border-slate-700 p-4 hidden md:block">
-
-<h3 class="font-bold mb-3">
-Participants
-</h3>
-
-<ul id="participantList" class="text-sm space-y-2">
-
-<li>Host</li>
-
-</ul>
+<select id="speed" class="bg-black border px-2 py-1">
+<option value="0.5">0.5x</option>
+<option value="1" selected>1x</option>
+<option value="1.5">1.5x</option>
+<option value="2">2x</option>
+</select>
 
 
-<hr class="my-4 border-slate-700">
+<button id="fullscreen"
+class="px-3 py-1 bg-gray-800 rounded">
 
+⛶
 
-<h3 class="font-bold mb-2">
-Chat
-</h3>
-
-<div id="chatBox"
-class="bg-slate-900 h-40 overflow-y-auto p-2 rounded text-sm">
-</div>
-
-<div class="flex gap-2 mt-2">
-
-<input id="chatInput"
-class="flex-1 p-2 bg-slate-900 border border-slate-600 rounded"
-placeholder="Message"/>
-
-<button onclick="sendChat()"
-class="bg-indigo-600 px-3 py-2 rounded">
-Send
 </button>
 
 </div>
@@ -137,332 +104,210 @@ Send
 </div>
 
 
-<!-- FLOATING CONTROLS -->
 
-<div
-class="fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-slate-800 p-3 rounded-xl shadow-lg">
+<!-- UPLOAD UI -->
 
-<button onclick="toggleMic()" class="bg-yellow-500 text-black px-4 py-2 rounded">
-Mic
-</button>
+<div id="uploadUI"
+class="border-2 border-dashed border-gray-600 rounded-xl p-16 text-center bg-gray-900">
 
-<button onclick="toggleCam()" class="bg-purple-600 px-4 py-2 rounded">
-Camera
-</button>
+<div class="text-6xl mb-4">🎬</div>
 
-<button onclick="shareScreen()" class="bg-blue-600 px-4 py-2 rounded">
-Share Screen
-</button>
+<h2 class="text-white text-2xl mb-3">
+Select Video
+</h2>
 
-<button onclick="raiseHand()" class="bg-orange-500 px-4 py-2 rounded">
-✋
-</button>
+<label
+class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded">
 
-<button onclick="leaveMeeting()" class="bg-red-600 px-4 py-2 rounded">
-Leave
-</button>
+Upload Video
+
+<input type="file"
+id="file"
+accept="video/*"
+class="hidden">
+
+</label>
 
 </div>
+
+</div>
+
 
 
 <script>
 
-// DevTools detection
-setInterval(function(){
+const video=document.getElementById("video")
+const file=document.getElementById("file")
+const uploadUI=document.getElementById("uploadUI")
+const playerBox=document.getElementById("playerBox")
 
-let widthThreshold = window.outerWidth - window.innerWidth > 160;
-let heightThreshold = window.outerHeight - window.innerHeight > 160;
+const play=document.getElementById("play")
+const back=document.getElementById("back")
+const forward=document.getElementById("forward")
+const progress=document.getElementById("progress")
+const volume=document.getElementById("volume")
+const speed=document.getElementById("speed")
+const fullscreen=document.getElementById("fullscreen")
 
-if(widthThreshold || heightThreshold){
 
-document.body.innerHTML = `
 
-<div style="
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-background:#000;
-color:#fff;
-font-family:Arial;
-text-align:center;
-padding:20px;
-">
+file.addEventListener("change",function(){
 
-<h1 style="font-size:42px;margin-bottom:20px;">
-⚠ WEBSITE SECURITY WARNING
-</h1>
+const v=this.files[0]
 
-<p style="font-size:18px;max-width:650px;line-height:1.6;">
-Developer Tools / Inspect Element detected.<br><br>
+if(v){
 
-Viewing or copying this website source code is strictly prohibited.
-This website is protected under digital security monitoring.
-</p>
+video.src=URL.createObjectURL(v)
 
-<p style="margin-top:30px;font-size:16px;color:#aaa;">
-© YK OFFICIAL <br>
-Developer: <b>Yegnesh Kamble</b><br>
-Do Not Copy Website Code
-</p>
+uploadUI.style.display="none"
+playerBox.style.display="block"
 
-</div>
-
-`;
+video.play()
 
 }
-
-},1000);
-
-
-// Detect Ctrl+U (View Source)
-
-document.addEventListener("keydown", function(e){
-
-if(e.ctrlKey && e.key === "u"){
-
-e.preventDefault();
-
-document.body.innerHTML = `
-
-<div style="
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-background:#000;
-color:#fff;
-font-family:Arial;
-text-align:center;
-">
-
-<h1 style="font-size:40px;">ACCESS DENIED</h1>
-
-<p style="margin-top:15px;">
-Viewing page source is not allowed.<br>
-This website code is protected.
-</p>
-
-<p style="margin-top:20px;color:#aaa;">
-YK OFFICIAL<br>
-Developer: Yegnesh Kamble
-</p>
-
-</div>
-
-`;
-
-}
-
-});
-
-</script>
-
-
-  
-<script>
-
-let peer
-let stream
-let room
-
-// GENERATE MEETING ID
-
-function generateMeetingID(){
-
-let id=Math.random().toString(36).substring(2,9)
-
-document.getElementById("roomID").value=id
-
-}
-
-
-// MEDIA
-
-async function startMedia(){
-
-stream=await navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
-})
-
-addVideo(stream,true)
-
-}
-
-function addVideo(stream,muted=false){
-
-let video=document.createElement("video")
-
-video.srcObject=stream
-video.autoplay=true
-video.playsInline=true
-video.muted=muted
-
-document.getElementById("videoGrid").appendChild(video)
-
-}
-
-
-// START MEETING
-
-async function startMeeting(){
-
-room=document.getElementById("roomID").value
-
-await startMedia()
-
-peer=new Peer(room)
-
-peer.on("call",call=>{
-
-call.answer(stream)
-
-call.on("stream",remote=>{
-addVideo(remote)
-})
 
 })
 
+
+
+play.onclick=function(){
+
+if(video.paused){
+
+video.play()
+play.innerHTML="⏸"
+
+}else{
+
+video.pause()
+play.innerHTML="▶"
+
+}
+
 }
 
 
-// JOIN MEETING
 
-async function joinMeeting(){
+back.onclick=function(){
 
-room=document.getElementById("roomID").value
+video.currentTime-=10
 
-await startMedia()
+}
 
-peer=new Peer()
 
-peer.on("open",id=>{
 
-let call=peer.call(room,stream)
+forward.onclick=function(){
 
-call.on("stream",remote=>{
-addVideo(remote)
+video.currentTime+=10
+
+}
+
+
+
+video.ontimeupdate=function(){
+
+progress.value=(video.currentTime/video.duration)*100
+
+}
+
+
+
+progress.oninput=function(){
+
+video.currentTime=(progress.value/100)*video.duration
+
+}
+
+
+
+volume.oninput=function(){
+
+video.volume=this.value
+
+}
+
+
+
+speed.onchange=function(){
+
+video.playbackRate=this.value
+
+}
+
+
+
+fullscreen.onclick=function(){
+
+if(!document.fullscreenElement){
+
+playerBox.requestFullscreen()
+
+}else{
+
+document.exitFullscreen()
+
+}
+
+}
+
+
+
+/* CHANGE FULLSCREEN ICON */
+
+document.addEventListener("fullscreenchange",()=>{
+
+if(document.fullscreenElement){
+
+fullscreen.innerHTML="🡽 Exit"
+
+}else{
+
+fullscreen.innerHTML="⛶"
+
+}
+
 })
 
+
+
+function closeVideo(){
+
+video.pause()
+video.src=""
+
+playerBox.style.display="none"
+uploadUI.style.display="block"
+
+}
+
+
+
+document.addEventListener("keydown",function(e){
+
+if(e.code==="Space"){
+
+e.preventDefault()
+
+play.click()
+
+}
+
+if(e.key==="ArrowRight"){
+
+video.currentTime+=10
+
+}
+
+if(e.key==="ArrowLeft"){
+
+video.currentTime-=10
+
+}
+
 })
-
-}
-
-
-// MIC
-
-function toggleMic(){
-
-let track=stream.getAudioTracks()[0]
-
-track.enabled=!track.enabled
-
-}
-
-
-// CAMERA
-
-function toggleCam(){
-
-let track=stream.getVideoTracks()[0]
-
-track.enabled=!track.enabled
-
-}
-
-
-// SCREEN SHARE
-
-async function shareScreen(){
-
-let screen=await navigator.mediaDevices.getDisplayMedia({
-video:true
-})
-
-addVideo(screen)
-
-}
-
-
-// CHAT
-
-function sendChat(){
-
-let msg=document.getElementById("chatInput").value
-
-let box=document.getElementById("chatBox")
-
-box.innerHTML+=`<div>👤 ${msg}</div>`
-
-box.scrollTop=box.scrollHeight
-
-document.getElementById("chatInput").value=""
-
-}
-
-
-// RAISE HAND
-
-function raiseHand(){
-
-let box=document.getElementById("chatBox")
-
-box.innerHTML+=`<div class="text-yellow-400">✋ Someone raised hand</div>`
-
-}
-
-
-// PARTICIPANT SIDEBAR
-
-function toggleParticipants(){
-
-let bar=document.getElementById("sidebar")
-
-bar.classList.toggle("hidden")
-
-}
-
-
-// COPY LINK
-
-function copyLink(){
-
-let id=document.getElementById("roomID").value
-
-let link=location.href+"?room="+id
-
-navigator.clipboard.writeText(link)
-
-alert("Meeting link copied")
-
-}
-
-
-// LEAVE
-
-function leaveMeeting(){
-
-location.reload()
-
-}
-
-
-// AUTO ROOM FROM LINK
-
-const params=new URLSearchParams(window.location.search)
-
-const roomParam=params.get("room")
-
-if(roomParam){
-
-document.getElementById("roomID").value=roomParam
-
-}
 
 </script>
 
 </body>
 </html>
+```
